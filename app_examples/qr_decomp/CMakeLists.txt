@@ -1,6 +1,6 @@
 add_eff_app(qr_decomp
     TYPE exe
-    ARCHS e1x
+    ARCHS e1x e1
     TARGETS fabric
     SOURCE main.c matrix.c qr.c qr_decomp.c
 )

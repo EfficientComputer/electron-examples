@@ -1,6 +1,6 @@
 add_eff_app(ldpc
     TYPE exe
-    ARCHS e1x
+    ARCHS e1x e1
     TARGETS fabric
     SOURCE main.c ldpc.c ldpc_utils.c ldpc_utils.h ${CMAKE_CURRENT_BINARY_DIR}/generator_80211.c ${CMAKE_CURRENT_BINARY_DIR}/parity_80211.c
 )

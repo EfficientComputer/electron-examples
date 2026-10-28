@@ -1,6 +1,6 @@
 add_eff_app(conv3x3xn
     TYPE exe
-    ARCHS e1x
+    ARCHS e1x e1
     TARGETS fabric
     SOURCE main.c conv3x3xn.c
 )

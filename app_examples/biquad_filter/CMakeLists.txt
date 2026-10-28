@@ -1,6 +1,6 @@
 add_eff_app(biquad_filter
     TYPE exe
-    ARCHS e1x
+    ARCHS e1x e1
     TARGETS fabric
     SOURCE main.c biquad_filter.c biquad_filter.h ${CMAKE_CURRENT_BINARY_DIR}/biquad_filter_input.c
 )

@@ -1,6 +1,6 @@
 add_eff_app(sqrt_newton
     TYPE exe
-    ARCHS e1x
+    ARCHS e1x e1
     TARGETS fabric
     SOURCE sqrt_newton.c
 )

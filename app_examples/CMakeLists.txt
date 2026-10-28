@@ -11,8 +11,16 @@ project(app_examples LANGUAGES NONE)
 #
 # set(EFF_BLD_HAND_OPTIMIZED ON)
 
-# EVK Requires UART peripheral 3
-set(EFF_STDIO_PORT 3)
+# The Electron E1x EVK routes the console through UART 3. The Electron E1 EVK uses the
+# SDK default (UART 0 on pins 22 and 23), so leave it alone there.
+if(EFF_ARCH STREQUAL "e1x")
+  set(EFF_STDIO_PORT 3)
+elseif(EFF_ARCH STREQUAL "e1")
+  # The Electron E1 EVK's USB console is on pins 22 and 23. Release 26.3.1 makes that the SDK
+  # default; release 26.3.0 defaulted to pins 12 and 13, so set it explicitly for both.
+  add_compile_definitions(STDIO_UART=UART_0 STDIO_PINMUX=PINMUX_22 STDIO_PINMUX_2=PINMUX_23
+                          STDIO_PINMUX_RX=PINMUX_22 STDIO_PINMUX_TX=PINMUX_23)
+endif()
 
 # The EFF SDK is the sdk folder of the installed effcc package. Pass it with
 # -DEFF_SDK_ROOT_DIR=<path> (or the EFF_SDK_ROOT_DIR environment variable); otherwise ask
