@@ -11,8 +11,11 @@ project(app_examples LANGUAGES NONE)
 #
 # set(EFF_BLD_HAND_OPTIMIZED ON)
 
-# EVK Requires UART peripheral 3
-set(EFF_STDIO_PORT 3)
+# The Electron E1x EVK routes the console through UART 3. The Electron E1 EVK uses the
+# SDK default (UART 0 on pins 22 and 23), so leave it alone there.
+if(EFF_ARCH STREQUAL "e1x")
+  set(EFF_STDIO_PORT 3)
+endif()
 
 # The EFF SDK is the sdk folder of the installed effcc package. Pass it with
 # -DEFF_SDK_ROOT_DIR=<path> (or the EFF_SDK_ROOT_DIR environment variable); otherwise ask

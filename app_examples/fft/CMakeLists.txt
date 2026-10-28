@@ -1,6 +1,6 @@
 add_eff_app(fft
     TYPE exe
-    ARCHS e1x
+    ARCHS e1x e1
     TARGETS fabric
     SOURCE main.c fft.c fft.h ${CMAKE_CURRENT_BINARY_DIR}/expected.c ${CMAKE_CURRENT_BINARY_DIR}/fft_twiddles.c
 )

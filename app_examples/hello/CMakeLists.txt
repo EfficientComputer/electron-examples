@@ -1,6 +1,6 @@
 add_eff_app(hello
     TYPE exe
-    ARCHS e1x
+    ARCHS e1x e1
     TARGETS fabric
     SOURCE hello.c
 )
