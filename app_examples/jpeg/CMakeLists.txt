@@ -7,6 +7,3 @@ add_eff_app(jpeg
 
 eff_subtarget_compile_options(jpeg_fabric PRIVATE -DUSE_PRAGMAS)
 
-if(EFF_BLD_HAND_OPTIMIZED)
-    eff_subtarget_compile_options(jpeg_fabric PRIVATE --disable-memory-ordering --mof-passes=convert-parallel-for,lift-scf-parallel --disable-mof-option-exploration --mark-critical-paths)
-endif()

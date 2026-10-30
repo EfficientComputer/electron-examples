@@ -5,4 +5,4 @@ add_eff_app(dmv_fp
     SOURCE main.c dmv_fp.c
 )
 
-eff_subtarget_compile_options(dmv_fp_fabric PRIVATE -DUSE_PRAGMAS --disable-memory-ordering)
+eff_subtarget_compile_options(dmv_fp_fabric PRIVATE -DUSE_PRAGMAS)

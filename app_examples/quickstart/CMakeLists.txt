@@ -5,4 +5,4 @@ add_eff_app(quickstart
     SOURCE main.c
 )
 
-eff_subtarget_compile_options(quickstart_fabric PRIVATE -DUSE_PRAGMAS --disable-memory-ordering)
+eff_subtarget_compile_options(quickstart_fabric PRIVATE -DUSE_PRAGMAS)

@@ -5,4 +5,4 @@ add_eff_app(dmm
     SOURCE main.c dmm.c
 )
 
-eff_subtarget_compile_options(dmm_fabric PRIVATE -I ${CMAKE_SOURCE_DIR}/shared -DUSE_PRAGMAS --disable-memory-ordering)
+eff_subtarget_compile_options(dmm_fabric PRIVATE -I ${CMAKE_SOURCE_DIR}/shared -DUSE_PRAGMAS)

@@ -5,7 +5,7 @@ add_eff_app(fft
     SOURCE main.c fft.c fft.h ${CMAKE_CURRENT_BINARY_DIR}/expected.c ${CMAKE_CURRENT_BINARY_DIR}/fft_twiddles.c
 )
 
-eff_subtarget_compile_options(fft_fabric PRIVATE -DUSE_PRAGMAS --disable-memory-ordering)
+eff_subtarget_compile_options(fft_fabric PRIVATE -DUSE_PRAGMAS)
 
 add_custom_command(
     OUTPUT fft_twiddles.c

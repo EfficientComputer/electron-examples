@@ -5,4 +5,4 @@ add_eff_app(conv3x3
     SOURCE main.c conv3x3.c
 )
 
-eff_subtarget_compile_options(conv3x3_fabric PRIVATE -DUSE_PRAGMAS --disable-memory-ordering -O3)
+eff_subtarget_compile_options(conv3x3_fabric PRIVATE -DUSE_PRAGMAS -O3)
