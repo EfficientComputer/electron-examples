@@ -20,6 +20,9 @@ cmake -S . -B bld-e1 -G Ninja -DEFF_ARCH=e1 && cmake --build bld-e1 --target qui
 cmake -S . -B bld-e1x -G Ninja -DEFF_ARCH=e1x && cmake --build bld-e1x --target quickstart/fabric/quickstart
 ```
 
+The `fft` and `ldpc` examples generate their test data with a Python script that needs `numpy`.
+Install it into the same environment as the compiler: `pip install numpy`.
+
 Board-specific details, such as the console UART and the user LED pins, are handled by the build and
 by `quickstart/board.h`, so the application sources are the same for both. See the
 [Targets](https://docs.efficient.computer/sdk/targets) page for what differs between the processors.

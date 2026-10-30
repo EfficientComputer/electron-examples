@@ -10,7 +10,7 @@ eff_subtarget_compile_options(ldpc_fabric PRIVATE -DUSE_PRAGMAS)
 add_custom_command(
     OUTPUT generator_80211.c
            parity_80211.c
-    COMMAND python3 generate_80211_matrices.py -d ${CMAKE_CURRENT_BINARY_DIR}
+    COMMAND ${Python3_EXECUTABLE} generate_80211_matrices.py -d ${CMAKE_CURRENT_BINARY_DIR}
     DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/generate_80211_matrices.py
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
