@@ -7,6 +7,17 @@ cmake_minimum_required(VERSION 3.15)
 set(CMAKE_SYSTEM_NAME Generic)
 project(app_examples LANGUAGES NONE)
 
+# The data generators below are Python scripts. Ask CMake for the interpreter instead of
+# hardcoding "python3": on Windows that name resolves to the Microsoft Store stub and the
+# build fails with exit code 9009. With a virtual environment active, its Python is chosen.
+find_package(Python3 REQUIRED COMPONENTS Interpreter)
+execute_process(COMMAND ${Python3_EXECUTABLE} -c "import numpy" RESULT_VARIABLE _numpy_rc OUTPUT_QUIET ERROR_QUIET)
+if(NOT _numpy_rc EQUAL 0)
+    message(FATAL_ERROR "The fft and ldpc examples generate their test data with numpy, which "
+                        "${Python3_EXECUTABLE} cannot import. Install it into the active environment: "
+                        "pip install numpy")
+endif()
+
 # Uncomment to enable hand-optimized app versions:
 #
 # set(EFF_BLD_HAND_OPTIMIZED ON)
@@ -30,7 +41,7 @@ if(NOT DEFINED EFF_SDK_ROOT_DIR AND DEFINED ENV{EFF_SDK_ROOT_DIR})
 endif()
 if(NOT DEFINED EFF_SDK_ROOT_DIR)
   execute_process(
-    COMMAND python -c "import effcc; print(effcc.__path__[0])"
+    COMMAND ${Python3_EXECUTABLE} -c "import effcc; print(effcc.__path__[0])"
     OUTPUT_VARIABLE _effcc_pkg
     OUTPUT_STRIP_TRAILING_WHITESPACE
     RESULT_VARIABLE _effcc_rc)
