@@ -5,4 +5,4 @@ add_eff_app(dmv
     SOURCE main.c dmv.c
 )
 
-eff_subtarget_compile_options(dmv_fabric PRIVATE -I ${CMAKE_SOURCE_DIR}/shared -DUSE_PRAGMAS --pnr-rounds=10)
+eff_subtarget_compile_options(dmv_fabric PRIVATE -I ${CMAKE_SOURCE_DIR}/shared -DUSE_PRAGMAS)

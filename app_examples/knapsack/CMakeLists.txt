@@ -5,4 +5,4 @@ add_eff_app(knapsack
     SOURCE main.c knapsack.c
 )
 
-eff_subtarget_compile_options(knapsack_fabric PRIVATE -DUSE_PRAGMAS --disable-memory-ordering --mof-passes=convert-parallel-for,lift-scf-parallel --disable-mof-option-exploration)
+eff_subtarget_compile_options(knapsack_fabric PRIVATE -DUSE_PRAGMAS)
