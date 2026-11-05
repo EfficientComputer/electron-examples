@@ -9,7 +9,6 @@ int main()
 
     board_led_pinmux();
     eff_gpio_dir_set(LED_BANK, LED_PINS, EFF_GPIO_OUT);
-    eff_gpio_pull_set(LED_BANK, LED_PINS, EFF_GPIO_PULL_NONE);
 
     while (1)
     {
