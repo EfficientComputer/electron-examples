@@ -62,6 +62,15 @@ file(REAL_PATH "${EFF_SDK_ROOT_DIR}" EFF_SDK_ROOT_DIR)
 include(${EFF_SDK_ROOT_DIR}/setup_sdk.cmake)
 add_subdirectory(${EFF_SDK_ROOT_DIR} sdk)
 
+# The SDK's eff_math and eff_fft modules also declare a simulator flavour of their libraries. The
+# simulator is not part of the shipped toolchain, so on the Electron E1 those two libraries fail to
+# link and break a bare `cmake --build`. Nothing links them; keep them out of the default build.
+foreach(_sim_lib eff_math_sim eff_fft_sim)
+    if(TARGET ${_sim_lib})
+        set_target_properties(${_sim_lib} PROPERTIES EXCLUDE_FROM_ALL TRUE)
+    endif()
+endforeach()
+
 if(EFF_BLD_HAND_OPTIMIZED)
   add_compile_definitions(EFF_BLD_HAND_OPTIMIZED)
 endif()
