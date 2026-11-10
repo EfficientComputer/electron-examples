@@ -6,6 +6,9 @@
 #pragma once
 
 #include <eff.h>
+#if defined(EFF_ARCH_E1) && !__has_include(<eff/drivers/pin_ctrl.h>)
+#include <eff/drivers/periph_ctrl.h>
+#endif
 
 #if defined(EFF_ARCH_E1)
 // Electron E1 EVK: user LEDs on DIGIO68 and DIGIO69 (GPIO bank 3, pins 4 and 5). Set SW15 on.
@@ -13,8 +16,14 @@
 #define LED_PINS (GPIO_PIN_4 | GPIO_PIN_5)
 static inline void board_led_pinmux(void) {
     // On the Electron E1 the GPIO banks are clock-gated at reset. From release 26.3.1 the SDK's
-    // eff_gpio_init enables the bank's clock; call it once before using the bank.
+    // eff_gpio_init enables the bank's clock; call it once before using the bank. Release 26.3.0
+    // has no eff_gpio_init (and no pin_ctrl driver, which is how we tell the two apart), so there
+    // the bank clocks are enabled through the peripheral control block instead.
+#if __has_include(<eff/drivers/pin_ctrl.h>)
     eff_gpio_init(LED_BANK);
+#else
+    PERIPH_CTRL_0->SLOW_PERIPH_APB_CG_CTRL_1 |= 0xF;   // gpio_enable, one bit per GPIO bank
+#endif
     eff_pinmux_set(PINMUX_68, PINMUX_GPIO);
     eff_pinmux_set(PINMUX_69, PINMUX_GPIO);
 }

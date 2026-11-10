@@ -11,11 +11,16 @@ project(app_examples LANGUAGES NONE)
 # hardcoding "python3": on Windows that name resolves to the Microsoft Store stub and the
 # build fails with exit code 9009. With a virtual environment active, its Python is chosen.
 find_package(Python3 REQUIRED COMPONENTS Interpreter)
+# Three examples generate their test data with numpy. Without it they are left out of the build
+# rather than failing the whole configure, so a fresh environment still builds everything else.
 execute_process(COMMAND ${Python3_EXECUTABLE} -c "import numpy" RESULT_VARIABLE _numpy_rc OUTPUT_QUIET ERROR_QUIET)
-if(NOT _numpy_rc EQUAL 0)
-    message(FATAL_ERROR "The fft and ldpc examples generate their test data with numpy, which "
-                        "${Python3_EXECUTABLE} cannot import. Install it into the active environment: "
-                        "pip install numpy")
+if(_numpy_rc EQUAL 0)
+    set(EFF_HAVE_NUMPY ON)
+else()
+    set(EFF_HAVE_NUMPY OFF)
+    message(WARNING "numpy is not available to ${Python3_EXECUTABLE}, so the fft, ldpc, and "
+                    "biquad_filter examples are skipped. To include them: pip install numpy, "
+                    "then configure again.")
 endif()
 
 # Uncomment to enable hand-optimized app versions:
@@ -59,6 +64,11 @@ if(NOT DEFINED EFF_SDK_ROOT_DIR)
   endif()
 endif()
 file(REAL_PATH "${EFF_SDK_ROOT_DIR}" EFF_SDK_ROOT_DIR)
+# The simulator is not part of the shipped toolchain. Release 26.3.0 still listed it among the
+# default subtargets, which made the SDK's own tests build simulator variants that cannot link.
+if(NOT DEFINED EFF_SUBTARGETS)
+    set(EFF_SUBTARGETS "native;fabric;scalar;optimized_fabric")
+endif()
 include(${EFF_SDK_ROOT_DIR}/setup_sdk.cmake)
 add_subdirectory(${EFF_SDK_ROOT_DIR} sdk)
 
@@ -76,7 +86,9 @@ if(EFF_BLD_HAND_OPTIMIZED)
 endif()
 
 add_subdirectory(bfs)
-add_subdirectory(biquad_filter)
+if(EFF_HAVE_NUMPY)
+    add_subdirectory(biquad_filter)
+endif()
 add_subdirectory(cholesky_decomp)
 add_subdirectory(conv3x3)
 add_subdirectory(conv3x3_dw)
@@ -88,13 +100,17 @@ add_subdirectory(dmm)
 add_subdirectory(dmm_i8)
 add_subdirectory(dmv)
 add_subdirectory(dmv_fp)
-add_subdirectory(fft)
+if(EFF_HAVE_NUMPY)
+    add_subdirectory(fft)
+endif()
 add_subdirectory(fir)
 add_subdirectory(hello)
 add_subdirectory(isqrt)
 add_subdirectory(jpeg)
 add_subdirectory(knapsack)
-add_subdirectory(ldpc)
+if(EFF_HAVE_NUMPY)
+    add_subdirectory(ldpc)
+endif()
 add_subdirectory(quickstart)
 add_subdirectory(levenshtein)
 add_subdirectory(qr_decomp)
